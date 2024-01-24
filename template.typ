@@ -189,7 +189,10 @@
       #set align(left)  
       *Abstract.* #abstract
       #v(3.5mm)
-      *Keywords:* #keywords.join([ $dot$ ])
+			#if keywords.len() > 0 {
+        let display = if type(keywords) == str { keywords } else { keywords.join([ $dot$ ]) }
+        text[*Keywords:* #display]
+      }
     ]
     
 
