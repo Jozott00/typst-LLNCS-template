@@ -187,6 +187,7 @@
     // abstract and keywords.
     block(width: 10cm)[
       #set align(left)  
+      #set par(justify: true)  
       *Abstract.* #abstract
       #v(3.5mm)
 			#if keywords.len() > 0 {
