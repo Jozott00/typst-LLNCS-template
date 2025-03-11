@@ -1,0 +1,8 @@
+[package]
+name = "typst-LLNCS-template"
+version = "0.1.0"
+entrypoint = "template.typ"
+
+[template]
+path = "."
+entrypoint = "main.typ"

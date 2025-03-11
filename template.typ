@@ -1,40 +1,40 @@
 #import "template/theorem_proof_cnf.typ": *
 
 // all theorem related elements
-#let  (
-    theorem, 
-    __thm-rules,
-    definition,
-    __def-rules,
-    proposition,
-    __prop-rules,
-    lemma,
-    __lem-rules,
-    proof,
-    __proof-rules,
-    corollary,
-    __corol-rules,
-  ) = __llncs_thm_cnf()
+#let (
+  theorem,
+  __thm-rules,
+  definition,
+  __def-rules,
+  proposition,
+  __prop-rules,
+  lemma,
+  __lem-rules,
+  proof,
+  __proof-rules,
+  corollary,
+  __corol-rules,
+) = __llncs_thm_cnf()
 
 
 // The project function defines how your document looks.
 // It takes your content and some metadata and formats it.
 // Go ahead and customize it to your liking!
-#let project(
-  title: "", 
+#let lncs(
+  title: [Contribution Title],
   thanks: none,
-  abstract: [], 
-  authors: (), 
-  keywords: (), 
-  bibliography-file: none,
-  body
+  abstract: [],
+  authors: (),
+  keywords: (),
+  // The result of a call to the `bibliography` function or `none`.
+  bibliography: none,
+  body,
 ) = {
-  
   //// CONSTANTS
   let PAR_INDENT = 15pt
   let TOP_PAGE_MARING = 50mm
   let TITLE_SIZE = 14pt
-  
+
   // Set the document's basic properties.
   set document(author: authors.map(a => a.name), title: title)
   set text(font: "New Computer Modern", lang: "en", size: 10pt)
@@ -52,37 +52,45 @@
       [#an.first() et al.]
     }
   }
-  
+
   //// PAR CONFIG
-  set par(leading: 0.50em)
-  show par: set block(spacing: 0.4em)
+  set par(leading: 0.50em, spacing: 0.4em)
 
   //// PAGE CONFIG
   set page(paper: "us-letter")
   set page(margin: (left: 44mm, right: 44mm, top: TOP_PAGE_MARING, bottom: 45mm))
   // set page header
-  set page(header: locate(loc => {
-    if loc.page() == 1 {return []}
+  set page(
+    header: context {
+      let pagenumer = counter(page).get().first()
+      if pagenumer == 1 { return [] }
 
-    let alignment = if (calc.rem(loc.page(), 2) == 1) { right } else { left }
-
-    align(alignment)[
-      #counter(page).display()
-      #h(1cm)
-      #author_running
-    ]
-  }))
+      if (calc.rem(pagenumer, 2) == 1) {
+        align(right)[
+          #title
+          #h(1cm)
+          #counter(page).display()
+        ]
+      } else {
+        align(left)[
+          #counter(page).display()
+          #h(1cm)
+          #author_running
+        ]
+      }
+    },
+  )
 
   //// HEADING CONFIGS
   set heading(numbering: "1.1")
-  // padding 
+  // padding
   show heading.where(level: 1): pad.with(bottom: 0.64em, top: 0.64em)
   show heading.where(level: 2): pad.with(bottom: 0.9em)
   show heading: it => {
     if it.level == 1 {
       set text(12pt, weight: "bold")
       it
-    }else if it.level == 2 {
+    } else if it.level == 2 {
       set text(10pt, weight: "bold")
       it
     } else if it.level == 3 {
@@ -100,13 +108,11 @@
 
   //// FOOTNOTE CONFIGS
   show footnote.entry: set text(9pt)
-  set footnote.entry(separator: 
-    line(length: 54pt, stroke: 0.5pt)
-  )
+  set footnote.entry(separator: line(length: 54pt, stroke: 0.5pt))
 
   /////  FIGURE CONFIG
   set figure.caption(separator: [. ]) // separator to .
-  show figure.caption: it => [*#it.supplement #it.counter.display()#it.separator*#it.body] // bold figure kind
+  show figure.caption: it => [*#it.supplement #context it.counter.display()#it.separator*#it.body] // bold figure kind
   show figure.where(kind: table): set figure.caption(position: top) // caption for table above figure
   set figure(gap: 12pt)
   show figure: pad.with(top: 20pt, bottom: 20pt)
@@ -120,10 +126,10 @@
   show ref: fig_replace
 
 
-  //// ---- Start of content ----- 
+  //// ---- Start of content -----
 
   v(-9mm)
-  
+
   // Title row.
   align(center)[
     #block()[
@@ -139,91 +145,91 @@
 
   // encapsulated styling
   {
-    set align(center)    
+    set align(center)
 
-    
-    let insts = authors.map(it => it.insts)
-      .flatten()
-      .dedup()
-    
+
+    let insts = authors.map(it => it.insts).flatten().dedup()
+
     // Author information.
-    
-    authors.enumerate().map(it => {
-      let a = it.at(1)
-      // find references
-      let refs = a.insts
-        .map(ai => str(insts.position(i => i == ai) + 1))
-        .join(",")
-    
-      let oicd = if a.oicd != none { [[#a.oicd]]} else {""}
-        
-      // add "and" infront of last author
-      let und = if it.at(0) > 0 and it.at(0) == authors.len() - 1 { "and" } else { "" }
-      
-      [#und #a.name#super([#refs#oicd])]
-    }).join(", ")
-    
-    
+
+    authors
+      .enumerate()
+      .map(it => {
+        let a = it.at(1)
+        // find references
+        let refs = a.insts.map(ai => str(insts.position(i => i == ai) + 1)).join(",")
+
+        let oicd = if a.oicd != none { [[#a.oicd]] } else { "" }
+
+        // add "and" infront of last author
+        let und = if it.at(0) > 0 and it.at(0) == authors.len() - 1 { "and" } else { "" }
+
+        [#und #a.name#super([#refs#oicd])]
+      })
+      .join(", ")
+
+
     v(3mm)
 
     // Institute information.
-    insts.enumerate().map(it => {
-      set text(9pt)
-      
-      let inst = it.at(1)
-      [#super([#{it.at(0) + 1}]) ]
-      [#inst.name]
-      if "addr" in inst [, #inst.addr]
-      if "email" in inst [#par(text(font: "PT Mono", size: 8pt, inst.email))]
-      if "url" in inst [#par(inst.url)]
-    })
-    .map(par)
-    .join()
-    
+    insts
+      .enumerate()
+      .map(it => {
+        set text(9pt)
+
+        let inst = it.at(1)
+        [#super([#{ it.at(0) + 1 }]) ]
+        [#inst.name]
+        if "addr" in inst [, #inst.addr]
+        if "email" in inst [#par(text(font: "PT Mono", size: 8pt, inst.email))]
+        if "url" in inst [#par(inst.url)]
+      })
+      .map(par)
+      .join()
+
 
     v(11.5mm)
 
 
     // abstract and keywords.
     block(width: 10cm)[
-      #set align(left)  
-      #set par(justify: true)  
+      #set align(left)
+      #set par(justify: true)
       *Abstract.* #abstract
       #v(3.5mm)
-			#if keywords.len() > 0 {
+      #if keywords.len() > 0 {
         let display = if type(keywords) == str { keywords } else { keywords.join([ $dot$ ]) }
         text[*Keywords:* #display]
       }
     ]
-    
-
   }
-  
+
   v(1mm)
 
   // Main body.
-  
+
   //// PAR CONFIG MAIN
   set par(justify: true, first-line-indent: PAR_INDENT)
 
   // show theorem rules
-  show:__thm-rules
-  show:__def-rules
-  show:__prop-rules
-  show:__lem-rules
-  show:__proof-rules
-  show:__corol-rules
+  show: __thm-rules
+  show: __def-rules
+  show: __prop-rules
+  show: __lem-rules
+  show: __proof-rules
+  show: __corol-rules
 
   // show actual body
   body
 
   v(8pt)
-  
+
+  // Style bibliography.
+  show std.bibliography: set text(9pt)
+  set std.bibliography(title: text(12pt)[References], style: "springer-lecture-notes-in-computer-science")
+
   // Display bibliography.
-  if bibliography-file != none {
-    show bibliography: set text(9pt)
-    bibliography(bibliography-file, title: text(12pt)[References], style: "springer-lecture-notes-in-computer-science")
-  }
+  bibliography
 }
 
 /// Author creation function
@@ -232,7 +238,7 @@
   if type(insts) != array {
     insts = (insts,)
   }
-  
+
   (
     name: name,
     oicd: oicd,
@@ -250,4 +256,3 @@
     url: if url != none { link(url) } else { none },
   )
 }
-

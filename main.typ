@@ -14,7 +14,7 @@
 )
 
 
-#show: project.with(
+#show: lncs.with(
   title: "Contribution Title",
   thanks: "Supported by organization x.",
   authors: (
@@ -36,7 +36,7 @@
     15--250 words.
   ],
   keywords: ("First keyword", "Second keyword", "Another keyword"),
-  bibliography-file: "refs.bib"
+  bibliography: bibliography("refs.bib")
 )
 
 
