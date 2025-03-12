@@ -181,8 +181,8 @@
         [#super([#{ it.at(0) + 1 }]) ]
         [#inst.name]
         if "addr" in inst [, #inst.addr]
-        if "email" in inst [#par(text(font: "PT Mono", size: 8pt, inst.email))]
-        if "url" in inst [#par(inst.url)]
+        if "email" in inst [#text(font: "PT Mono", size: 8pt, inst.email)]
+        if "url" in inst [#inst.url]
       })
       .map(par)
       .join()
