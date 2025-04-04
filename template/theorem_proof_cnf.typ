@@ -17,6 +17,7 @@
     emph[(#name)] + " "
   }
   emph(body)
+  v(5pt)
 }]
 
 #let __llncs_thm_proof_style(
@@ -25,6 +26,7 @@
   number,
   body
 ) = block(width: 100%, breakable: true)[#{
+  set align(left)
   emph(thm-type) + ". "
   body
   v(5pt)

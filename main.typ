@@ -1,6 +1,6 @@
 #import "template.typ": *
 
-#let inst_princ = institute("Princeton Univerity", 
+#let inst_princ = institute("Princeton University", 
   addr: "Princeton NJ 08544, USA"
 )
 #let inst_springer = institute("Springer Heidelberg", 
