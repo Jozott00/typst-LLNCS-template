@@ -1,4 +1,4 @@
-#import "template/theorem_proof_cnf.typ": *
+#import "theorem_proof_cnf.typ": *
 
 // all theorem related elements
 #let (
