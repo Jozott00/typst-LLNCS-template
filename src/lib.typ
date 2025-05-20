@@ -201,7 +201,7 @@
         .join()
 
       if insts.len() == 0 {
-        [ No Author Given]
+        [ No Institute Given]
       }
     }
 
@@ -266,7 +266,7 @@
 
 
 /// Institute creation function
-#let institute(name, addr: "", email: none, url: none) = {
+#let institute(name, addr: none, email: none, url: none) = {
   (
     name: name,
     addr: addr,
