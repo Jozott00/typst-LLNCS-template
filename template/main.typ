@@ -40,7 +40,7 @@
 )
 
 = First Section
-== A subsection Sample
+== A Subsection Sample
 
 Please note that the first paragraph of a section or subsection is not indented. The first paragraph that follows a table, figure, equation etc. does not need an indent, either.
 

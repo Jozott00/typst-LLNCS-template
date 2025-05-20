@@ -85,8 +85,8 @@
   set heading(numbering: "1.1")
   show heading: it => if it.numbering == none { it } else { block(counter(heading).display(it.numbering) + h(4.5mm) + it.body) }
   // padding
-  show heading.where(level: 1): pad.with(bottom: 0.91em, top: 0.64em)
-  show heading.where(level: 2): pad.with(bottom: 0.9em)
+  show heading.where(level: 1): pad.with(bottom: 0.45em, top: 0.64em)
+  show heading.where(level: 2): pad.with(bottom: 0.7em)
   show heading: it => {
     if it.level == 1 {
       set text(12pt, weight: "bold")
@@ -99,7 +99,7 @@
       [#v(2em)#h(-PAR_INDENT) #it.body]
     } else if it.level == 4 {
       set text(10pt, weight: "regular", style: "italic")
-      [#v(1.5em)#h(-PAR_INDENT)#it.body]
+      [#v(1.3em)#h(-PAR_INDENT)#it.body]
     }
   }
 

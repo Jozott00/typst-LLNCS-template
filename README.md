@@ -1,6 +1,6 @@
-# Springer's Lecture Notes in Computer Science Typst Template
+# fine-lncs
 
-A non-perfect LLNCS (Lecture Notes in Computer Science) [typst](https://typst.app) template, that comes rather close to [Springer's Latex template](https://www.overleaf.com/latex/templates/springer-lecture-notes-in-computer-science/kzwwpvhwnvfj#.WuA4JS5uZpi).
+A LNCS (Lecture Notes in Computer Science) [typst](https://typst.app) template, that comes rather close to [Springer's Latex template](https://www.overleaf.com/latex/templates/springer-lecture-notes-in-computer-science/kzwwpvhwnvfj#.WuA4JS5uZpi).
 
 ## Installation
 
