@@ -16,7 +16,7 @@ keywords = [
 ]
 categories = ["paper"]
 disciplines = ["computer-science"]
-license = "MIT-0"
+license = "MIT"
 
 [template]
 path = "template"
