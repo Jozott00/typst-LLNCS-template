@@ -16,6 +16,7 @@ keywords = [
 ]
 categories = ["paper"]
 disciplines = ["computer-science"]
+exclude = ["tests"]
 license = "MIT"
 
 [template]
