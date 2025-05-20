@@ -116,6 +116,7 @@
   set figure.caption(separator: [. ]) // separator to .
   show figure.caption: it => align(center)[*#it.supplement #context it.counter.display()#it.separator*#it.body] // bold figure kind
   show figure.where(kind: table): set figure.caption(position: top) // caption for table above figure
+  show figure.where(kind: image): set image(width: 100%)
   set figure(gap: 4.5mm)
   show figure: pad.with(top: 20.5pt, bottom: 22pt)
   show figure: set text(9pt)
