@@ -39,8 +39,6 @@
   bibliography: bibliography("refs.bib")
 )
 
-#set text(fill: red)
-
 = First Section
 == A subsection Sample
 

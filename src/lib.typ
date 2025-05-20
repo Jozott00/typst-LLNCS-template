@@ -128,7 +128,6 @@
   show figure.where(kind: image): fig_replace
   show ref: fig_replace
 
-  set text(fill: red)
   //// TABLE CONFIG
   let table_stroke = 0.5pt
   set table(stroke: (x, y) => (left: table_stroke, right: table_stroke))
