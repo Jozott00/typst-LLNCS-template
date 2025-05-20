@@ -58,7 +58,7 @@
 
   //// PAGE CONFIG
   set page(paper: "us-letter")
-  set page(margin: (left: 44mm, right: 44mm, top: TOP_PAGE_MARING, bottom: 45mm))
+  set page(margin: (left: 47.5mm, right: 44mm, top: TOP_PAGE_MARING, bottom: 45mm))
   // set page header
   set page(
     header: context {
@@ -83,9 +83,9 @@
 
   //// HEADING CONFIGS
   set heading(numbering: "1.1")
-  show heading: it => if it.numbering == none { it } else { block(counter(heading).display(it.numbering) + h(1em) + it.body) }
+  show heading: it => if it.numbering == none { it } else { block(counter(heading).display(it.numbering) + h(4.5mm) + it.body) }
   // padding
-  show heading.where(level: 1): pad.with(bottom: 0.64em, top: 0.64em)
+  show heading.where(level: 1): pad.with(bottom: 0.91em, top: 0.64em)
   show heading.where(level: 2): pad.with(bottom: 0.9em)
   show heading: it => {
     if it.level == 1 {
@@ -109,15 +109,17 @@
 
   //// FOOTNOTE CONFIGS
   show footnote.entry: set text(9pt)
-  set footnote.entry(separator: line(length: 54pt, stroke: 0.5pt))
+  show footnote.entry: it => pad(left: 1mm, top: 0mm, it)
+  set footnote.entry(separator: line(start: (10pt, 0pt), length: 57pt, stroke: 0.5pt))
 
   /////  FIGURE CONFIG
   set figure.caption(separator: [. ]) // separator to .
-  show figure.caption: it => [*#it.supplement #context it.counter.display()#it.separator*#it.body] // bold figure kind
+  show figure.caption: it => align(center)[*#it.supplement #context it.counter.display()#it.separator*#it.body] // bold figure kind
   show figure.where(kind: table): set figure.caption(position: top) // caption for table above figure
-  set figure(gap: 12pt)
-  show figure: pad.with(top: 20pt, bottom: 20pt)
+  set figure(gap: 4.5mm)
+  show figure: pad.with(top: 20.5pt, bottom: 22pt)
   show figure: set text(9pt)
+  show figure: align.with(left)
   // let Figure display as Fig
   let fig_replace(it) = {
     show "Figure": "Fig."
@@ -125,6 +127,13 @@
   }
   show figure.where(kind: image): fig_replace
   show ref: fig_replace
+
+  set text(fill: red)
+  //// TABLE CONFIG
+  let table_stroke = 0.5pt
+  set table(stroke: (x, y) => (left: table_stroke, right: table_stroke))
+  set table(inset: (x: 0.7mm, y: 0.74mm))
+  set table.hline(stroke: table_stroke)
 
 
   //// ---- Start of content -----
@@ -142,7 +151,7 @@
     ]
   ]
 
-  v(6mm)
+  v(8.5mm)
 
   // encapsulated styling
   {
@@ -169,36 +178,45 @@
       })
       .join(", ")
 
-
-    v(3mm)
-
-    // Institute information.
-    insts
-      .enumerate()
-      .map(it => {
-        set text(9pt)
-
-        let inst = it.at(1)
-        [#super([#{ it.at(0) + 1 }]) ]
-        [#inst.name]
-        if "addr" in inst [, #inst.addr]
-        if "email" in inst [#text(font: "PT Mono", size: 8pt, inst.email)]
-        if "url" in inst [#inst.url]
-      })
-      .map(par)
-      .join()
+    if authors.len() == 0 {
+      [ No Author Given]
+    }
 
 
-    v(11.5mm)
+    v(3.6mm)
+
+    { // Institute information.
+      set text(9pt)
+
+      insts
+        .enumerate()
+        .map(it => {
+          let inst = it.at(1)
+          [#super([#{ it.at(0) + 1 }]) ]
+          [#inst.name]
+          if inst.addr != none [, #inst.addr ]
+          linebreak()
+          if inst.email != none [#text(font: "New Computer Modern Mono", size: 9pt, inst.email) \ ]
+          if inst.url != none [#inst.url \ ]
+        })
+        .join()
+
+      if insts.len() == 0 {
+        [ No Author Given]
+      }
+    }
+
+    v(10.7mm)
 
 
     // abstract and keywords.
-    block(width: 10cm)[
+    block(width: 104mm)[
       #set align(left)
       #set par(justify: true)
+      #set text(size: 9pt)
       *Abstract.* #abstract
-      #v(3.5mm)
       #if keywords.len() > 0 {
+        v(4.5mm)
         let display = if type(keywords) == str { keywords } else { keywords.join([ $dot$ ]) }
         text[*Keywords:* #display]
       }

@@ -39,6 +39,8 @@
   bibliography: bibliography("refs.bib")
 )
 
+#set text(fill: red)
+
 = First Section
 == A subsection Sample
 
@@ -56,13 +58,16 @@ four levels of headings. @heading_styles gives a summary of all heading levels.
 #figure(caption: [Table Captions should be placed above the tables])[
   #table(
     columns: 3,
-    align: left,
+    align: left + bottom,
+    table.hline(),
     [Heading level], [Example], [Font size and style],
+    table.hline(),
     [Title (centered)], text(14pt, weight: "bold", "Lecture Notes"), [14 point, bold],
     [1st-level heading], text(12pt, weight: "bold")[Introduction], [12 point, bold],
     [2nd-level heading], text(10pt, weight: "bold")[Printing Area], [10 point, bold],
     [3rd-level heading], [#text(10pt, weight: "bold")[Run-in Heading in Bold.] Text follows.], [10 point, bold],
     [4th-level heading], [#text(10pt, style: "italic")[Lowest Level Heading] Text follows.], [10 point, italic],
+    table.hline(),
   )
 ] <heading_styles>
 
