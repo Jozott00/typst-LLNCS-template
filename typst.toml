@@ -3,6 +3,7 @@ name = "fine-lncs"
 version = "0.1.0"
 entrypoint = "src/lib.typ"
 authors = ["jozott"]
+license = "MIT"
 description = "An Springer's Lecture Notes in Computer Science (LNCS) styled template."
 homepage = "https://github.com/Jozott00/typst-fine-lncs"
 repository = "https://github.com/Jozott00/typst-fine-lncs"
@@ -16,8 +17,6 @@ keywords = [
 ]
 categories = ["paper"]
 disciplines = ["computer-science"]
-exclude = ["tests"]
-license = "MIT"
 
 [template]
 path = "template"
